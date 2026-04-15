@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Test Revalidation</title>
+  </head>
+  <body>
+    <h1>Test Cache Revalidation</h1>
+    <button onclick="testRevalidate()">Revalidate Product Page</button>
+    <div id="result"></div>
+
+    <script>
+      async function testRevalidate() {
+        const resultDiv = document.getElementById("result");
+        resultDiv.innerHTML = "Testing...";
+
+        try {
+          const response = await fetch(
+            "/api/revalidate?path=/product/photo1&secret=revalidate_secret_key_12345",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            },
+          );
+
+          const result = await response.json();
+          resultDiv.innerHTML = `
+                    <h3>Response:</h3>
+                    <pre>${JSON.stringify(result, null, 2)}</pre>
+                    <p>Status: ${response.status}</p>
+                `;
+        } catch (error) {
+          resultDiv.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+        }
+      }
+    </script>
+  </body>
+</html>

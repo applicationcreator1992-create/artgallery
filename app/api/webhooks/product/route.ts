@@ -1,0 +1,77 @@
+import crypto from "crypto";
+import { NextRequest, NextResponse } from "next/server";
+
+const SHOPIFY_WEBHOOK_SECRET = process.env.SHOPIFY_WEBHOOK_SECRET || "";
+
+async function handleProductUpdate(data: any) {
+  console.log("🔄 Product update webhook received:", data);
+
+  if (data.handle) {
+    await fetch(
+      `${process.env.NEXT_PUBLIC_URL}/api/revalidate?path=/product/${data.handle}&secret=${process.env.SHOPIFY_REVALIDATION_SECRET}`,
+    );
+    console.log(`✅ Revalidated product page: /product/${data.handle}`);
+  }
+}
+
+function verifyWebhook(body: string, signature: string): boolean {
+  if (!SHOPIFY_WEBHOOK_SECRET) {
+    console.error("❌ SHOPIFY_WEBHOOK_SECRET not configured");
+    return false;
+  }
+
+  const calculatedSignature = crypto
+    .createHmac("sha256", SHOPIFY_WEBHOOK_SECRET)
+    .update(body, "utf8")
+    .digest("base64");
+
+  return crypto.timingSafeEqual(
+    Buffer.from(signature),
+    Buffer.from(calculatedSignature),
+  );
+}
+
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.text();
+    const signature = request.headers.get("x-shopify-hmac-sha256") || "";
+    const topic = request.headers.get("x-shopify-topic") || "";
+    const shop = request.headers.get("x-shopify-shop-domain") || "";
+
+    console.log(`🔔 Product webhook received: ${topic} from ${shop}`);
+
+    if (!verifyWebhook(body, signature)) {
+      console.error("❌ Invalid webhook signature");
+      return NextResponse.json({ error: "Invalid signature" }, { status: 401 });
+    }
+
+    let data;
+    try {
+      data = JSON.parse(body);
+    } catch (error) {
+      console.error("❌ Invalid JSON in webhook body");
+      return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
+    }
+
+    if (topic === "PRODUCTS_UPDATE") {
+      await handleProductUpdate(data);
+    } else {
+      console.log(`ℹ️ Unexpected topic for product webhook: ${topic}`);
+    }
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error("❌ Product webhook processing error:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 },
+    );
+  }
+}
+
+export async function GET(request: NextRequest) {
+  return NextResponse.json({
+    message: "Product webhook endpoint ready",
+    topic: "PRODUCTS_UPDATE",
+  });
+}

@@ -1,0 +1,106 @@
+@import "tailwindcss";
+
+@plugin "@tailwindcss/container-queries";
+@plugin "@tailwindcss/typography";
+
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: #e5e7eb;
+  }
+}
+
+/* Design System Styles */
+@layer components {
+  /* Spinner animations */
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .animate-spin {
+    animation: spin 1s linear infinite;
+  }
+
+  .animate-spin-slow {
+    animation: spin 2s linear infinite;
+  }
+
+  .animate-spin-fast {
+    animation: spin 0.5s linear infinite;
+  }
+
+  /* Skeleton animations */
+  @keyframes pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+  .animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  /* Fade animations */
+  .fade-opacity-instant {
+    transition: opacity 0ms ease-in-out;
+  }
+
+  .fade-opacity-fast {
+    transition: opacity 150ms ease-in-out;
+  }
+
+  .fade-opacity-normal {
+    transition: opacity 300ms ease-in-out;
+  }
+
+  .fade-opacity-slow {
+    transition: opacity 500ms ease-in-out;
+  }
+
+  .fade-opacity-slower {
+    transition: opacity 1000ms ease-in-out;
+  }
+}
+
+/* Custom color utilities for design system */
+@layer utilities {
+  .text-primary-600 {
+    color: #e11d48;
+  }
+
+  .text-secondary-600 {
+    color: #38bdf8;
+  }
+
+  .text-accent-600 {
+    color: #f59e0b;
+  }
+
+  .text-green-600 {
+    color: #22c55e;
+  }
+
+  .text-yellow-600 {
+    color: #f59e0b;
+  }
+
+  .text-red-600 {
+    color: #ef4444;
+  }
+
+  .text-blue-600 {
+    color: #3b82f6;
+  }
+}

@@ -1,0 +1,125 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+
+
+# dependencies
+
+/node_modules
+
+/.pnp
+
+.pnp.js
+
+
+
+# testing
+
+/coverage
+
+.playwright
+
+
+
+# next.js
+
+/.next/
+
+/out/
+
+
+
+# production
+
+/build
+
+
+
+# misc
+
+.DS_Store
+
+*.pem
+
+
+
+# debug
+
+npm-debug.log*
+
+yarn-debug.log*
+
+yarn-error.log*
+
+.pnpm-debug.log*
+
+
+
+# local env files
+
+.env
+
+.env.local
+
+.env.development.local
+
+.env.test.local
+
+.env.production.local
+
+!.env.example
+
+
+
+# vercel
+
+.vercel
+
+
+
+# typescript
+
+*.tsbuildinfo
+
+next-env.d.ts
+
+.env*.local
+
+
+
+# Additional security - prevent any file with secrets
+
+**/*secret*
+
+**/*token*
+
+**/*key*
+
+**/*password*
+
+
+
+# Block specific secret patterns
+
+**/config/secrets.*
+
+**/scripts/secrets.*
+
+
+
+# Documentation with real secrets (keep .env.example only)
+
+docs/DEPLOYMENT.md
+
+CONFIGURATION_LIST.md
+
+NOTIFICATION_SETUP.md
+
+AUTOMATED_NOTIFICATIONS.md
+
+
+
+# Test files with real data
+
+tests/inventory-update.automated.test.js
+
+tests/*.test.js
