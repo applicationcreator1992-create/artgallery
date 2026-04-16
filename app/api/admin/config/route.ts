@@ -91,7 +91,7 @@ export async function GET() {
         publicPhoneNumber: getEnvValue(envContent, "NEXT_PUBLIC_WHATSAPP_PHONE_NUMBER", ""),
       },
       collections: {
-        maxCollections: parseInt(String(getEnvValue(envContent, "HOMEPAGE_MAX_COLLECTIONS", "8")) || 8),
+        maxCollections: parseInt(String(getEnvValue(envContent, "HOMEPAGE_MAX_COLLECTIONS", "8") || "8")),
         cacheTime: getEnvValue(envContent, "COLLECTION_CACHE_TIME", "days"),
       },
       newsletter: {
