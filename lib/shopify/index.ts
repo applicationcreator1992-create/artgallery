@@ -557,7 +557,7 @@ export async function revalidate(req: NextRequest): Promise<NextResponse> {
   }
 
   if (isProductUpdate) {
-    revalidateTag(TAGS.products, "seconds");
+    revalidateTag(TAGS.products);
     // Also revalidate specific product path
     const path = req.nextUrl.searchParams.get("path");
     if (path) {
@@ -569,7 +569,7 @@ export async function revalidate(req: NextRequest): Promise<NextResponse> {
 
   // NEW: Real-time inventory updates
   if (isInventoryUpdate) {
-    revalidateTag(TAGS.products, "seconds"); // Products need refresh for inventory changes
+    revalidateTag(TAGS.products); // Products need refresh for inventory changes
     // Also revalidate specific product path
     const path = req.nextUrl.searchParams.get("path");
     if (path) {
