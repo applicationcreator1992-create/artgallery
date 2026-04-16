@@ -11,7 +11,8 @@
     "test:inventory": "node tests/inventory-update.automated.test.js",
     "analyze": "ANALYZE=true next build",
     "lint": "next lint",
-    "shopify:token": "node scripts/shopify-token-generator.js"
+    "shopify:token": "node scripts/shopify-token-generator.js",
+    "postinstall": "pnpm approve-builds"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",
