@@ -20,8 +20,8 @@
     "clsx": "^2.1.1",
     "critters": "^0.0.25",
     "next": "15.1.7",
-    "react": "19.0.0",
-    "react-dom": "19.0.0",
+    "react": "19.2.5",
+    "react-dom": "19.2.5",
     "sonner": "^2.0.1",
     "tailwind-merge": "^3.5.0"
   },
