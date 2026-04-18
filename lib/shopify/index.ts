@@ -546,7 +546,7 @@ export async function revalidate(req: NextRequest): Promise<NextResponse> {
 
   // Enhanced revalidation strategy for real-time updates
   if (isCollectionUpdate) {
-    revalidateTag(TAGS.collections);
+    revalidateTag(TAGS.collections, 'collections-update');
     // Also revalidate specific collection and homepage paths
     const path = req.nextUrl.searchParams.get("path");
     if (path) {
@@ -557,7 +557,7 @@ export async function revalidate(req: NextRequest): Promise<NextResponse> {
   }
 
   if (isProductUpdate) {
-    revalidateTag(TAGS.products);
+    revalidateTag(TAGS.products, 'products-update');
     // Also revalidate specific product path
     const path = req.nextUrl.searchParams.get("path");
     if (path) {
@@ -569,7 +569,7 @@ export async function revalidate(req: NextRequest): Promise<NextResponse> {
 
   // NEW: Real-time inventory updates
   if (isInventoryUpdate) {
-    revalidateTag(TAGS.products); // Products need refresh for inventory changes
+    revalidateTag(TAGS.products, 'inventory-update'); // Products need refresh for inventory changes
     // Also revalidate specific product path
     const path = req.nextUrl.searchParams.get("path");
     if (path) {
